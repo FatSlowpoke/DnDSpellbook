@@ -1,6 +1,6 @@
 {
-  "name": "Книга заклинаний",
-  "short_name": "Заклинания",
+  "name": "Spellbook",
+  "short_name": "Spellbook",
   "description": "D&D 5e — офлайн-книга заклинаний с поиском, фильтрами и своим списком",
   "start_url": "./index.html",
   "scope": "./",

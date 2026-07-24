@@ -3,13 +3,13 @@
 <head>
 <!-- D&D 5e spellbook -->
 <meta charset="utf-8">
-<title>Книга заклинаний</title>
+<title>Spellbook</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14121c">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Книга заклинаний">
+<meta name="apple-mobile-web-app-title" content="Spellbook">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -155,12 +155,14 @@
     margin-bottom:9px;overflow:hidden;transition:border-color .15s}
   .card:hover{border-color:var(--line2)}
   .card.exp{border-color:var(--gold-dim);background:var(--panel2)}
-  .chead{display:flex;align-items:flex-start;gap:10px;padding:13px 14px;cursor:pointer}
+  .chead{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer}
+  .card:not(.exp) .chead{padding-bottom:6px}
+  .card>.cmeta{padding:0 14px 13px;margin-top:0}
   .ctitle{flex:1;min-width:0}
   .cname-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .cname{font-size:18px;font-weight:600;line-height:1.2}
   .cmeta{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--muted);
-    margin-top:6px;display:flex;align-items:center;line-height:1.15}
+    margin-top:6px;display:flex;align-items:center;line-height:15px}
   .sdot{width:9px;height:9px;border-radius:50%;flex:none}
   .cmeta .sep{color:var(--faint)}
   .mdiv{width:1px;height:11px;background:var(--line);flex:none;margin:0 7px}
@@ -757,14 +759,14 @@ function spellCard(s){
     body+='</div>';
   }
   return `<div class="card ${exp?'exp':''}" data-id="${s.id}"><div class="chead">
+    <div class="ctitle"><div class="cname-row"><div class="cname">${esc(s.name)}</div>${exp?tg.map(t=>badgeHtml(t.text,TAG_COLORS[t.cls])).join(""):""}</div></div>
     <div class="marks">
       <button class="pin ${pin?'on':''}" data-pin="${s.id}" title="Всегда доступно">
         <svg viewBox="0 0 24 24"><path d="M16 9V4h1a1 1 0 0 0 0-2H7a1 1 0 0 0 0 2h1v5a3 3 0 0 1-3 3v2h5.97v7l1 1 1-1v-7H19v-2a3 3 0 0 1-3-3z"/></svg></button>
       <button class="star ${star?'on':''}" data-star="${s.id}" title="Подготовить (выбрать на день)">
         <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.6.8-4.9 4.6 1.3 6.5L12 18l-5.9 2.8 1.3-6.5-4.9-4.6 6.6-.8z"/></svg></button>
     </div>
-    <div class="ctitle"><div class="cname-row"><div class="cname">${esc(s.name)}</div>${exp?tg.map(t=>badgeHtml(t.text,TAG_COLORS[t.cls])).join(""):""}</div>${exp?"":meta}</div>
-    <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>${body}</div>`;
+    <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>${exp?"":meta}${body}</div>`;
 }
 function cell(k,v,icon){return `<div class="gcell"><div class="gk">${k}</div><div class="gv">${icon||""}${esc(v)||"—"}</div></div>`;}
 function plural(n){const m=n%10,h=n%100;
