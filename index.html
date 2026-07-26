@@ -33,6 +33,7 @@
   html[data-theme="light"] .b-conc,html[data-theme="light"] .mtag.conc{color:#2f8a99}
   html[data-theme="light"] .b-rit,html[data-theme="light"] .mtag.rit{color:#a9772a}
   html[data-theme="light"] .b-own{color:#4f8a47}
+  html[data-theme="light"] .pin.on svg{fill:#1a68b8}
   html[data-theme="pink"]{
     --bg:#fff0f6; --panel:#fffafc; --panel2:#ffe6f0; --raise:#ffd6e8;
     --ink:#6a2a4a; --muted:#b06a8a; --faint:#dfa3c0; --body:#7a3a58;
@@ -42,6 +43,7 @@
   html[data-theme="pink"] .b-conc,html[data-theme="pink"] .mtag.conc{color:#3aa0b0}
   html[data-theme="pink"] .b-rit,html[data-theme="pink"] .mtag.rit{color:#c08a2e}
   html[data-theme="pink"] .b-own{color:#5a9a55}
+  html[data-theme="pink"] .pin.on svg{fill:#1a68b8}
   .themes{display:flex;gap:11px;justify-content:center;margin-top:13px}
   .sw{width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);
     cursor:pointer;padding:0;transition:.15s}
@@ -53,6 +55,8 @@
     font-family:'Spectral',Georgia,serif;-webkit-font-smoothing:antialiased}
   html{overflow-y:scroll;scrollbar-gutter:stable}
   body{padding:18px 14px 60px;max-width:760px;margin:0 auto}
+  .sticky-top{position:sticky;top:0;z-index:40;background:var(--bg);
+    padding-top:6px;margin-top:-6px}
   .ui{font-family:'Inter',system-ui,sans-serif}
   ::selection{background:rgba(214,176,106,.3)}
 
@@ -81,7 +85,7 @@
   .slot.used{border:1.5px solid var(--line2);background:transparent}
   .slot.ready{border:1.5px solid var(--line2);background:transparent}
   .slotx{color:var(--faint);font-size:15px;line-height:1;pointer-events:none}
-  .slotdot{width:11px;height:11px;background:#161213;border-radius:2px;pointer-events:none}
+  .slotdot{width:11px;height:11px;background:var(--ink);border-radius:2px;pointer-events:none}
   .tabs{display:flex;gap:6px;margin:16px 0 12px}
   .tab{flex:1;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
     padding:10px 6px;border:1px solid var(--line);background:var(--panel);
@@ -160,21 +164,21 @@
   .card>.cmeta{padding:0 14px 13px;margin-top:0}
   .ctitle{flex:1;min-width:0}
   .cname-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .cname{font-size:18px;font-weight:600;line-height:1.2}
+  .cname{font-size:18px;font-weight:600;line-height:1.2;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .cname.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal}
   .cmeta{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--muted);
     margin-top:6px;display:flex;align-items:center;line-height:15px}
   .sdot{width:9px;height:9px;border-radius:50%;flex:none}
   .cmeta .sep{color:var(--faint)}
   .mdiv{width:1px;height:11px;background:var(--line);flex:none;margin:0 7px}
-  .spell-icon{width:15px;height:15px;border-radius:4px;flex:none;
-    object-fit:cover;vertical-align:middle;position:relative;top:2px}
-  .mtime-inner{display:inline-flex;align-items:center;gap:3px}
+  .spell-icon{width:15px;height:15px;border-radius:4px;
+    object-fit:cover;vertical-align:-3px;margin-right:3px}
   .cell-icon{width:20px;height:20px;border-radius:5px;object-fit:cover;
     vertical-align:middle;margin-right:6px;position:relative;top:2px}
-  .mcol{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:none;text-align:center}
-  .mtime{width:82px}
-  .mrange{width:64px}
-  .mdur{width:80px}
+  .mcol{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto;text-align:left;min-width:22px}
+  .mtime{max-width:130px}
+  .mrange{max-width:100px}
+  .mdur{max-width:120px}
   .badge{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;
     text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px;
     border:1px solid currentColor;flex:none;white-space:nowrap;text-align:center}
@@ -205,7 +209,7 @@
     display:flex;align-items:center;justify-content:center;border-radius:8px;transition:.12s}
   .pin:hover{background:var(--raise)}
   .pin svg{width:17px;height:17px;fill:var(--faint);transition:.12s}
-  .pin.on svg{fill:#8fb8e0}
+  .pin.on svg{fill:#2f8fe6}
   .sect{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;
     letter-spacing:.08em;color:var(--faint);margin:18px 2px 9px;display:flex;align-items:center;gap:7px}
   .sect:first-child{margin-top:2px}
@@ -298,17 +302,21 @@
   .codeout{width:100%;min-height:120px;font-family:ui-monospace,Menlo,Consolas,monospace;
     font-size:11.5px;line-height:1.5;padding:11px;background:var(--bg);color:var(--ink);
     border:1px solid var(--line);border-radius:9px;resize:vertical;white-space:pre;overflow:auto}
-@media (max-width:480px){
-  .slots-block{gap:22px;padding:0 4px}
-  .slotlvl{width:28px;font-size:11px}
-  .slot{width:20px;height:20px;border-radius:5px}
-  .slotrow{gap:6px}
-  .slotcells{gap:4px}
+@media (max-width:700px){
+  h1{font-size:19px;letter-spacing:.08em}
+  .rule{gap:8px}
+  .rule:before,.rule:after{max-width:22px}
+  .slots-block{gap:14px;padding:0 2px}
+  .slots-col:last-child{justify-content:flex-start}
+  .slotlvl{width:26px;font-size:11px}
+  .slot{width:19px;height:19px;border-radius:5px}
+  .slotrow{gap:5px}
+  .slotcells{gap:3px}
   .slotx{font-size:12px}
-  .cmeta{font-size:10.5px;flex-wrap:wrap;row-gap:4px}
-  .mtime{width:58px}
-  .mrange{width:50px}
-  .mdur{width:58px}
+  .cmeta{font-size:10.5px}
+  .mtime{max-width:90px}
+  .mrange{max-width:72px}
+  .mdur{max-width:88px}
   .mdiv{margin:0 4px}
   .badge{font-size:9px;padding:2px 5px}
   .cell-icon{width:16px;height:16px}
@@ -328,7 +336,6 @@
 
 <header>
   <div class="rule"><h1>Книга заклинаний</h1></div>
-  <div class="sub">D&amp;D 5e · ваша книга заклинаний</div>
   <div class="themes ui" id="themes">
     <button class="sw" data-theme="dark" title="Тёмная" aria-label="Тёмная тема"></button>
     <button class="sw" data-theme="light" title="Светлая" aria-label="Светлая тема"></button>
@@ -338,6 +345,7 @@
 
 <div id="slotsWrap"></div>
 
+<div class="sticky-top" id="stickyTop">
 <div class="tabs ui">
   <div class="tab on" data-view="all">Все</div>
   <div class="tab prep" data-view="prep">Подготовленные <span class="cnt" id="pcount">0</span></div>
@@ -348,16 +356,17 @@
 <div class="bar" id="bar">
   <label class="search">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-    <input id="q" class="ui" type="text" placeholder="Поиск по названию и тексту…" autocomplete="off">
+    <input id="q" class="ui" type="text" placeholder="Поиск по названию…" autocomplete="off">
     <button type="button" class="qclear" id="qClear" tabindex="-1" aria-label="Очистить поиск">
       <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </label>
   <button class="fbtn ui" id="ftoggle"><span>Фильтры</span>
     <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
 </div>
+<div class="count ui" id="count"></div>
+</div>
 
 <div class="filters ui" id="fpanel"></div>
-<div class="count ui" id="count"></div>
 <div id="list"></div>
 
 <script>
@@ -519,8 +528,11 @@ function renderSlots(){
     pressTimer=setTimeout(()=>{
       longFired=true;
       const lvl=el.dataset.lvl, i=+el.dataset.i;
-      if((slots[lvl][i]||0)!==0){ slots[lvl][i]=0; renderSlots(); saveSlots(); }
-    },2000);
+      if((slots[lvl][i]||0)!==0){
+        slots[lvl][i]=0; renderSlots(); saveSlots();
+        hapticAction();
+      }
+    },600);
   }
   function endPress(){ clearTimer(); }
   let lastClickAt={};
@@ -535,6 +547,7 @@ function renderSlots(){
     const key=lvl+":"+i, now=Date.now();
     if(lastClickAt[key] && now-lastClickAt[key]<350) return;
     lastClickAt[key]=now;
+    haptic();
     const cur=slots[lvl][i]||0;
     slots[lvl][i]= cur===0?2 : cur===2?1 : 2;
     renderSlots(); saveSlots();
@@ -576,6 +589,7 @@ function buildFilters(){
   h+='<button class="clearf" id="clearf">Сбросить фильтры</button>';
   p.innerHTML=h;
   p.querySelectorAll(".chip").forEach(ch=>ch.addEventListener("click",()=>{
+    haptic();
     const grp=ch.parentElement.dataset.grp,v=ch.dataset.v;
     if(grp==="levels")toggle(state.levels,+v);
     else if(grp==="classes")toggle(state.classes,v);
@@ -585,6 +599,7 @@ function buildFilters(){
     ch.classList.toggle("on"); updateFbtn(); render();
   }));
   document.getElementById("clearf").addEventListener("click",()=>{
+    haptic();
     state.levels.clear();state.classes.clear();state.times.clear();state.kinds.clear();state.conc=false;state.ritual=false;
     p.querySelectorAll(".chip.on").forEach(c=>c.classList.remove("on")); updateFbtn(); render();
   });
@@ -597,10 +612,17 @@ function categorizeTime(t){t=(t||"").toLowerCase();
 function timeShort(t){
   if(!t) return "";
   const c=categorizeTime(t);
-  if(c==="action") return "Действие";
-  if(c==="bonus") return "Бонус. действие";
+  if(c==="action") return "Действ.";
+  if(c==="bonus") return "Б. действ.";
   if(c==="reaction") return "Реакция";
   return t;
+}
+function abbrevMeta(t){
+  if(!t) return t;
+  return t
+    .replace(/мгновенн[а-яё]*/gi,"Мгн.")
+    .replace(/(\d+)\s*кле(ток|тки|тка)/gi,"$1 кл.")
+    .replace(/(?<![а-яё])дней(?![а-яё])/gi,"дн.");
 }
 const LEVEL_COLORS=["#1ab6f0","#22c55e","#eec91f","#ff8a1e","#ef4136",
   "#f0459e","#a3123a","#a855f7","#4f46e5","#5b4fe0"];
@@ -627,10 +649,7 @@ function updateFbtn(){const b=document.getElementById("ftoggle"),n=activeFilterC
 
 function matches(s){
   if(state.view==="prep" && !prepared.has(s.id) && !pinned.has(s.id)) return false;
-  if(state.q){
-    const hay=(s.name+" "+(s.desc||[]).join(" ")+" "+(s.higher||[]).join(" ")+" "+(s.time||"")+" "+(s.range||"")+" "+(s.dur||"")).toLowerCase();
-    if(!hay.includes(state.q)) return false;
-  }
+  if(state.q && !normQ(s.name).includes(state.q)) return false;
   if(state.kinds.size && !state.kinds.has(isAbility(s)?"ability":"spell")) return false;
   if(state.classes.size && !(s.classes||[]).some(c=>state.classes.has(c))) return false;
   if(!isAbility(s)){
@@ -645,6 +664,8 @@ function matches(s){
 }
 
 // ---------- helpers ----------
+function haptic(ms){ if(navigator.vibrate) navigator.vibrate(ms||10); }
+function hapticAction(){ if(navigator.vibrate) navigator.vibrate([12,40,15]); }
 function esc(t){return (t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 function splitRow(l){ l=(l||"").trim();
   let i=l.indexOf("\t"); if(i>=0) return [l.slice(0,i).trim(), l.slice(i+1).replace(/\t/g," ").trim()];
@@ -699,6 +720,24 @@ function gv(id){return document.getElementById(id).value;}
 function newId(){return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
 
 // ---------- spell card ----------
+function fitTitles(){
+  document.querySelectorAll(".cname").forEach(el=>{
+    el.classList.remove("clamp2");
+    el.style.whiteSpace="nowrap";
+    el.style.fontSize="";
+    const max=parseFloat(getComputedStyle(el).fontSize);
+    const min=14;
+    let size=max;
+    while(el.scrollWidth>el.clientWidth+1 && size>min){
+      size-=0.5;
+      el.style.fontSize=size+"px";
+    }
+    if(el.scrollWidth>el.clientWidth+1){
+      el.style.whiteSpace="normal";
+      el.classList.add("clamp2");
+    }
+  });
+}
 function tagInfo(s){
   const ab=isAbility(s);
   if(ab) return [{text:"Умение",cls:"abil"}];
@@ -713,7 +752,7 @@ const DEMO_ICON_REACTION="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABg
 function metaRow(s){
   const ab=isAbility(s);
   const tags=tagInfo(s);
-  const tagsHtml=tags.map(t=>badgeHtml(t.text,TAG_COLORS[t.cls])).join("");
+  const tagsHtml=tags.map(t=>badgeHtml(t.cls==="rit"?"Рит.":t.text,TAG_COLORS[t.cls])).join("");
 
   if(ab){
     return `<div class="cmeta">${tagsHtml}</div>`;
@@ -722,16 +761,16 @@ function metaRow(s){
   const lvlColor=LEVEL_COLORS[Math.min(Math.max(s.level|0,0),9)];
   const time=timeShort(s.time)||"—";
   const rl=rangeLabel(s.range);
-  const range=(rl && rl!=="—")?rl:"—";
-  const dur=ru(s.dur)||"—";
-  const tagHTML=tags.length ? `<span class="mdiv"></span>${tagsHtml}` : "";
+  const range=abbrevMeta((rl && rl!=="—")?rl:"—");
+  const dur=abbrevMeta(ru(s.dur)||"—");
+  const tagHTML=tags.length ? `<span class="mdiv"></span><span class="mtags">${tagsHtml}</span>` : "";
   const timeCat=categorizeTime(s.time);
   const iconHTML= timeCat==="action" ? `<img src="${DEMO_ICON}" class="spell-icon" alt="">`
     : timeCat==="bonus" ? `<img src="${DEMO_ICON_BONUS}" class="spell-icon" alt="">`
     : timeCat==="reaction" ? `<img src="${DEMO_ICON_REACTION}" class="spell-icon" alt="">` : "";
   return `<div class="cmeta">`
     +`${typeBadgeHtml(type,s.level)}<span class="mdiv"></span>`
-    +`<span class="mcol mtime"><span class="mtime-inner">${iconHTML}${esc(time)}</span></span><span class="mdiv"></span>`
+    +`<span class="mcol mtime">${iconHTML}${esc(time)}</span><span class="mdiv"></span>`
     +`<span class="mcol mrange">${esc(range)}</span><span class="mdiv"></span>`
     +`<span class="mcol mdur">${esc(dur)}</span>`
     +tagHTML
@@ -871,17 +910,19 @@ function renderList(){
     h=res.map(spellCard).join("");
   }
   list.innerHTML=h;
+  fitTitles();
   list.querySelectorAll(".chead").forEach(head=>head.addEventListener("click",e=>{
     if(e.target.closest(".star")||e.target.closest(".pin"))return;
+    haptic();
     const id=head.parentElement.dataset.id;
     state.expanded.has(id)?state.expanded.delete(id):state.expanded.add(id); render();
   }));
   list.querySelectorAll(".star").forEach(btn=>btn.addEventListener("click",async e=>{
-    e.stopPropagation(); const id=btn.dataset.star;
+    e.stopPropagation(); hapticAction(); const id=btn.dataset.star;
     prepared.has(id)?prepared.delete(id):prepared.add(id); await savePrepared(); render();
   }));
   list.querySelectorAll(".pin").forEach(btn=>btn.addEventListener("click",async e=>{
-    e.stopPropagation(); const id=btn.dataset.pin;
+    e.stopPropagation(); hapticAction(); const id=btn.dataset.pin;
     pinned.has(id)?pinned.delete(id):pinned.add(id); await savePinned(); render();
   }));
 }
@@ -1088,23 +1129,40 @@ async function saveSpellFromForm(){
 
 // ---------- wire global ----------
 document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  haptic();
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
   t.classList.add("on"); state.view=t.dataset.view;
   state.expanded.clear(); state.formOpen=false; state.exportOpen=false;
   state.quickOpen=false; state.draft=null; render();
   t.classList.remove("bounce"); void t.offsetWidth; t.classList.add("bounce");
 }));
-document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render();});
+function normQ(t){ return (t||"").toLowerCase().replace(/ё/g,"е"); }
+document.getElementById("q").addEventListener("input",e=>{state.q=normQ(e.target.value.trim());render();});
+document.getElementById("q").addEventListener("keydown",e=>{
+  if(e.key==="Enter"){ e.preventDefault(); e.target.blur(); }
+});
 const qClearBtn=document.getElementById("qClear");
-qClearBtn.addEventListener("mousedown",e=>e.preventDefault());
-qClearBtn.addEventListener("touchstart",e=>e.preventDefault(),{passive:false});
-qClearBtn.addEventListener("click",()=>{
+function doQClear(){
   qClearBtn.classList.remove("bounce"); void qClearBtn.offsetWidth; qClearBtn.classList.add("bounce");
   const q=document.getElementById("q");
+  q.blur();
   if(!q.value) return;
+  haptic();
   q.value=""; state.q=""; render();
+}
+let qClearTouched=false;
+qClearBtn.addEventListener("mousedown",e=>e.preventDefault());
+qClearBtn.addEventListener("touchend",e=>{
+  e.preventDefault();
+  qClearTouched=true;
+  doQClear();
+});
+qClearBtn.addEventListener("click",()=>{
+  if(qClearTouched){ qClearTouched=false; return; }
+  doQClear();
 });
 document.getElementById("ftoggle").addEventListener("click",()=>{
+  haptic();
   document.getElementById("fpanel").classList.toggle("show");
   document.getElementById("ftoggle").classList.toggle("open");
 });
@@ -1115,6 +1173,7 @@ function applyTheme(t){
   document.querySelectorAll(".sw").forEach(b=>b.classList.toggle("on",b.dataset.theme===t));
 }
 document.querySelectorAll(".sw").forEach(b=>b.addEventListener("click",async()=>{
+  haptic();
   applyTheme(b.dataset.theme);
   try{ await Store.set("theme",b.dataset.theme); }catch(e){}
 }));
@@ -1146,6 +1205,13 @@ document.addEventListener("click",function(e){
     return;
   }
   if(!bubble.hidden && !e.target.closest(".cond-bubble")) bubble.hidden=true;
+});
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    const ae=document.activeElement;
+    if(ae && (ae.tagName==="INPUT" || ae.tagName==="TEXTAREA")) ae.blur();
+  }
 });
 
 if("serviceWorker" in navigator){
